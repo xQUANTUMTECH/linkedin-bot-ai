@@ -7,7 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Credenziali LinkedIn
+# Credenziali LinkedIn OAuth (preferite)
+LINKEDIN_CLIENT_ID = os.getenv('LINKEDIN_CLIENT_ID')
+LINKEDIN_CLIENT_SECRET = os.getenv('LINKEDIN_CLIENT_SECRET')
+
+# Credenziali LinkedIn legacy (backup)
 LINKEDIN_EMAIL = os.getenv('LINKEDIN_EMAIL', 'mauriziotarricone@gmail.com')
 LINKEDIN_PASSWORD = os.getenv('LINKEDIN_PASSWORD', 'Ma119801987!')
 
