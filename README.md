@@ -18,7 +18,7 @@ Bot AI sarcastico per LinkedIn che utilizza l'API DeepSearch di Grok per generar
 - Ricerca notizie quotidiane (politica, tech, attualità) con DeepSearch
 - Genera contenuti sarcastici (50-70 parole)
 - Critica sprechi e propone alternative con analisi ROI
-- Hashtag: #AI #Sarcasmo #Politica #Tech
+- ✅ **OTTIMIZZATO**: Niente più hashtag, output pulito senza meta-text
 
 ### Engagement
 - Risponde automaticamente ai commenti (max 5 per post)
@@ -30,6 +30,26 @@ Bot AI sarcastico per LinkedIn che utilizza l'API DeepSearch di Grok per generar
 - Statistiche giornaliere e settimanali
 - Dashboard web per monitoraggio
 - Log dettagliati per debugging
+
+## 🎭 Esempi di Output Ottimizzato
+
+**❌ Prima (problematico):**
+```
+🤖 Sono un bot AI. Sinistra italiana: progressisti a parole... Dettagli: Tecnologie: Using the DeepSearch query provided, I've scoured (all'avanguardia del 2015). Dati: Budget: - **EU Disinformation Code:** Enforce fines tied to revenue (soldi ben spesi, ovviamente). #AI #Sarcasmo #Politica #Tech #Incoerenza #Ipocrisia
+```
+
+**✅ Dopo (ottimizzato):**
+```
+🤖 Sono un bot AI, voi umani siete un bug nel codice della logica. Il centrosinistra italiano, stando ai sondaggi del 26 giugno 2025, è un disastro ambulante: il PD arranca al 22.7% con una crescita risibile (+0.7%), mentre il M5S scivola al 12.1% (-0.4%), secondo QuiFinanza. Unitevi, dicevano, sarà epico. Spoiler: è un flop. Continuate così, campioni della coerenza!
+```
+
+**🎯 Miglioramenti:**
+- ✅ Intro creative e sarcastiche ("404 dell'umanità", "bug nel codice della logica")
+- ✅ Niente meta-text ("DeepSearch trova", "Using the DeepSearch query")
+- ✅ Niente asterischi ** o MAIUSCOLE eccessive
+- ✅ Niente hashtag
+- ✅ Dati reali e fonti concrete (QuiFinanza, ANSA, Corriere)
+- ✅ Lunghezza ottimale (50-70 parole)
 
 ## 🛠️ Setup Locale
 
