@@ -82,6 +82,117 @@ def health_check():
             'timestamp': datetime.now().isoformat()
         }), 500
 
+@app.route('/force-post', methods=['POST'])
+def force_post():
+    """
+    Forza pubblicazione immediata di un post
+    """
+    try:
+        # Ottieni il bot manager globale
+        from main import bot_manager
+
+        if not bot_manager:
+            return jsonify({
+                'success': False,
+                'error': 'Bot manager non inizializzato'
+            }), 500
+
+        # Forza routine giornaliera
+        success = bot_manager.daily_routine()
+
+        if success:
+            return jsonify({
+                'success': True,
+                'message': 'Post pubblicato con successo!',
+                'timestamp': datetime.now().isoformat()
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Errore nella pubblicazione del post'
+            }), 500
+
+    except Exception as e:
+        logging.exception("Errore force-post:")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/force-post-now')
+def force_post_page():
+    """
+    Pagina per forzare un post immediato
+    """
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>🚀 Force Post LinkedIn</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+            .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+            h1 { color: #0077b5; text-align: center; }
+            .btn { background: #0077b5; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; margin: 10px 0; }
+            .btn:hover { background: #005885; }
+            .result { margin-top: 20px; padding: 15px; border-radius: 5px; }
+            .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+            .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+            .loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🚀 LinkedIn Bot - Force Post</h1>
+            <p>Clicca il pulsante per forzare la pubblicazione di un post LinkedIn ADESSO!</p>
+
+            <button class="btn" onclick="forcePost()">📝 PUBBLICA POST ADESSO</button>
+
+            <div id="result"></div>
+        </div>
+
+        <script>
+            function forcePost() {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '<div class="result loading">🔄 Pubblicazione in corso...</div>';
+
+                fetch('/force-post', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        resultDiv.innerHTML = `
+                            <div class="result success">
+                                ✅ <strong>POST PUBBLICATO CON SUCCESSO!</strong><br>
+                                🕐 Timestamp: ${data.timestamp}<br>
+                                🔗 Controlla il tuo profilo LinkedIn
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="result error">
+                                ❌ <strong>Errore:</strong> ${data.error}
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            ❌ <strong>Errore di rete:</strong> ${error.message}
+                        </div>
+                    `;
+                });
+            }
+        </script>
+    </body>
+    </html>
+    '''
+
 @app.route('/logs')
 def view_logs():
     """
