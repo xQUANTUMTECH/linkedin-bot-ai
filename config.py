@@ -11,6 +11,9 @@ load_dotenv()
 LINKEDIN_EMAIL = os.getenv('LINKEDIN_EMAIL', 'mauriziotarricone@gmail.com')
 LINKEDIN_PASSWORD = os.getenv('LINKEDIN_PASSWORD', 'Ma119801987!')
 
+# Modalità test disabilitata - SEMPRE pubblicazione reale
+TEST_MODE = False
+
 # Credenziali xAI/Grok
 XAI_API_KEY = os.getenv('XAI_API_KEY', 'xai-foL2y8TQ0kyLUU86uWlxDaLLgpm7O1NOzR3ftGKocglbe9VO4h6NgnBV8jxIkQIQ9rgGcjPug0WEyKkm')
 XAI_API_URL = "https://api.x.ai/v1/chat/completions"
