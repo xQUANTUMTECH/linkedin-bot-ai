@@ -39,22 +39,30 @@ class LinkedInBotManager:
         
     def initialize(self) -> bool:
         """
-        Inizializza il bot e autentica
+        Inizializza il bot e autentica (continua anche se LinkedIn fallisce)
         """
         logging.info("🤖 Inizializzazione LinkedIn Bot AI...")
-        
-        # Autentica LinkedIn
-        if not self.linkedin_bot.authenticate():
-            logging.error("❌ Autenticazione LinkedIn fallita")
-            return False
-        
-        # Test API Grok
-        test_result = self.grok_search.deep_search("test query")
-        if not test_result:
-            logging.warning("⚠️ API Grok non risponde, userò contenuti di fallback")
-        
-        logging.info("✅ Bot inizializzato con successo")
-        return True
+
+        # Autentica LinkedIn (non bloccante)
+        linkedin_ok = self.linkedin_bot.authenticate()
+        if not linkedin_ok:
+            logging.warning("⚠️ Autenticazione LinkedIn fallita - continuo in modalità limitata")
+            logging.warning("🔧 Il bot funzionerà ma non potrà pubblicare su LinkedIn")
+        else:
+            logging.info("✅ Autenticazione LinkedIn riuscita")
+
+        # Test API Grok (non bloccante)
+        try:
+            test_result = self.grok_search.deep_search("test query")
+            if test_result:
+                logging.info("✅ API Grok funzionante")
+            else:
+                logging.warning("⚠️ API Grok non risponde, userò contenuti di fallback")
+        except Exception as e:
+            logging.warning(f"⚠️ Errore test Grok: {e}")
+
+        logging.info("✅ Bot inizializzato con successo (modalità adattiva)")
+        return True  # Sempre True - il bot si adatta alle condizioni
     
     def create_and_publish_post(self, force_type: str = None) -> Optional[str]:
         """

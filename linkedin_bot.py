@@ -33,12 +33,17 @@ class LinkedInBot:
         try:
             logging.info("Tentativo autenticazione LinkedIn...")
             
-            # Configurazione semplificata per linkedin_api
+            # Configurazione avanzata con gestione cookies per evitare CHALLENGE
+            import os
+            cookies_dir = os.path.join(os.getcwd(), "linkedin_cookies")
+            os.makedirs(cookies_dir, exist_ok=True)
+
             self.linkedin = Linkedin(
                 username=LINKEDIN_EMAIL,
                 password=LINKEDIN_PASSWORD,
-                refresh_cookies=True,
-                debug=False
+                refresh_cookies=False,  # Riusa cookies esistenti
+                debug=False,
+                cookies_dir=cookies_dir  # Salva cookies per riutilizzo
             )
             
             # Test connessione
