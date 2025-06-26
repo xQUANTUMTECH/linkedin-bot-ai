@@ -88,14 +88,20 @@ def force_post():
     Forza pubblicazione immediata di un post
     """
     try:
-        # Ottieni il bot manager globale
-        from main import bot_manager
+        # Crea bot manager locale per evitare problemi di import
+        from main import LinkedInBotManager
 
-        if not bot_manager:
+        logging.info("🚀 Inizializzazione bot manager per force post...")
+        bot_manager = LinkedInBotManager()
+
+        # Inizializza il bot
+        if not bot_manager.initialize():
             return jsonify({
                 'success': False,
-                'error': 'Bot manager non inizializzato'
+                'error': 'Inizializzazione bot manager fallita'
             }), 500
+
+        logging.info("✅ Bot manager inizializzato, esecuzione routine...")
 
         # Forza routine giornaliera
         success = bot_manager.daily_routine()
