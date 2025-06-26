@@ -1,4 +1,4 @@
-STA PRENDENDO """
+"""
 Test reale con API Grok per post centrosinistra su notizie di oggi
 """
 import requests
@@ -327,9 +327,7 @@ Dichiarazione vs realtà: "coerenza programmatica" vs opportunismo politico quot
 
 Ipocrisia certificata della sinistra italiana. Dati reali: promesse elettorali vs voti parlamentari = 0% coerenza.
 
-Progressisti di facciata, conservatori di fatto.
-
-#AI #Sarcasmo #Politica #Incoerenza #Ipocrisia"""
+Progressisti di facciata, conservatori di fatto."""
 
 def pulisci_output_aggressivo(testo):
     """
