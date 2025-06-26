@@ -22,22 +22,37 @@ def check_environment():
     """
     Verifica configurazione Railway
     """
+    # Variabili obbligatorie
     required_vars = [
-        'DATABASE_URL',
-        'LINKEDIN_EMAIL', 
+        'LINKEDIN_EMAIL',
         'LINKEDIN_PASSWORD',
         'XAI_API_KEY'
     ]
-    
+
+    # Variabili opzionali (con fallback)
+    optional_vars = [
+        'DATABASE_URL'  # Userà modalità mock se mancante
+    ]
+
     missing_vars = []
     for var in required_vars:
         if not os.getenv(var):
             missing_vars.append(var)
-    
+
     if missing_vars:
-        logging.error(f"❌ Variabili d'ambiente mancanti: {missing_vars}")
+        logging.error(f"❌ Variabili d'ambiente obbligatorie mancanti: {missing_vars}")
         return False
-    
+
+    # Controlla variabili opzionali
+    missing_optional = []
+    for var in optional_vars:
+        if not os.getenv(var):
+            missing_optional.append(var)
+
+    if missing_optional:
+        logging.warning(f"⚠️ Variabili opzionali mancanti (userò fallback): {missing_optional}")
+        logging.warning("⚠️ DATABASE_URL mancante - bot userà modalità mock per il database")
+
     logging.info("✅ Configurazione Railway verificata")
     return True
 
