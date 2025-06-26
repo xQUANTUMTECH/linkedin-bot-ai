@@ -6,7 +6,6 @@ import logging
 import random
 from typing import List, Dict, Optional
 from linkedin_api import Linkedin
-from fake_useragent import UserAgent
 from config import (
     LINKEDIN_EMAIL, LINKEDIN_PASSWORD, MAX_COMMENTS_PER_POST,
     DELAY_BETWEEN_POSTS, DELAY_BETWEEN_COMMENTS, DELAY_AFTER_ERROR
@@ -15,7 +14,6 @@ from config import (
 class LinkedInBot:
     def __init__(self):
         self.linkedin = None
-        self.user_agent = UserAgent()
         self.last_post_time = 0
         self.daily_posts = 0
         self.daily_comments = 0
@@ -32,7 +30,6 @@ class LinkedInBot:
             self.linkedin = Linkedin(
                 username=LINKEDIN_EMAIL,
                 password=LINKEDIN_PASSWORD,
-                user_agent=self.user_agent.random,
                 refresh_cookies=True,
                 debug=False
             )
