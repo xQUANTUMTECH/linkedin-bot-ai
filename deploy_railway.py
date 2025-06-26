@@ -20,18 +20,18 @@ logging.basicConfig(
 
 def check_environment():
     """
-    Verifica configurazione Railway
+    Verifica configurazione Railway - Solo XAI_API_KEY obbligatoria
     """
-    # Variabili obbligatorie
+    # Solo XAI_API_KEY è obbligatoria per il funzionamento base
     required_vars = [
-        'LINKEDIN_EMAIL',
-        'LINKEDIN_PASSWORD',
         'XAI_API_KEY'
     ]
 
     # Variabili opzionali (con fallback)
     optional_vars = [
-        'DATABASE_URL'  # Userà modalità mock se mancante
+        'DATABASE_URL',      # Userà modalità mock se mancante
+        'LINKEDIN_EMAIL',    # Userà modalità test se mancante
+        'LINKEDIN_PASSWORD'  # Userà modalità test se mancante
     ]
 
     missing_vars = []
@@ -50,10 +50,13 @@ def check_environment():
             missing_optional.append(var)
 
     if missing_optional:
-        logging.warning(f"⚠️ Variabili opzionali mancanti (userò fallback): {missing_optional}")
-        logging.warning("⚠️ DATABASE_URL mancante - bot userà modalità mock per il database")
+        logging.warning(f"⚠️ Variabili opzionali mancanti (userò modalità test): {missing_optional}")
+        if 'DATABASE_URL' in missing_optional:
+            logging.warning("⚠️ DATABASE_URL mancante - bot userà modalità mock per il database")
+        if 'LINKEDIN_EMAIL' in missing_optional or 'LINKEDIN_PASSWORD' in missing_optional:
+            logging.warning("⚠️ Credenziali LinkedIn mancanti - bot userà modalità test (no pubblicazione)")
 
-    logging.info("✅ Configurazione Railway verificata")
+    logging.info("✅ Configurazione Railway verificata - Bot può avviarsi")
     return True
 
 def start_web_dashboard():
